@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    public GameObject gold;
+    //public GameObject gold;
     [SerializeField]
     private float spawnRadius = 0.1f;
 
@@ -27,7 +27,20 @@ public class ObjectSpawner : MonoBehaviour
 
     private void SpawnObject()
     {
-        Vector2 spawnPostition = Random.insideUnitSphere * spawnRadius;
-        Instantiate(gold, new Vector3(spawnPostition.x, 0f, spawnPostition.y), Quaternion.identity, this.transform);
+        GameObject gold = ObjectPool.sharedInstance.GetPooledObject();
+        if(gold != null)
+        {
+            Vector2 spawnPostition = Random.insideUnitSphere * spawnRadius;
+            gold.transform.position = new Vector3(spawnPostition.x, 0f, spawnPostition.y);
+            gold.SetActive(true);
+        }
+        //Vector2 spawnPostition = Random.insideUnitSphere * spawnRadius;
+        //Instantiate(gold, new Vector3(spawnPostition.x, 0f, spawnPostition.y), Quaternion.identity, this.transform);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
     }
 }
