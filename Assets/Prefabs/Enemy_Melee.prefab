@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 5662456365728112144}
   - component: {fileID: 4543368944224552569}
   - component: {fileID: 4776174600588412985}
-  - component: {fileID: 2361880690280445846}
+  - component: {fileID: 7266312940298577985}
+  - component: {fileID: 7070400995319585079}
   m_Layer: 0
   m_Name: Enemy_Melee
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,7 +112,23 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &2361880690280445846
+--- !u!114 &7266312940298577985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254591872192724492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b524104ac9b64448974a4f57385f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minPatrolSpeed: 3
+  maxPatrolSpeed: 6
+  chaseSpeed: 4
+  engageDistance: 2
+--- !u!54 &7070400995319585079
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
