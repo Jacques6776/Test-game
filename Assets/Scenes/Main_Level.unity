@@ -704,10 +704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ae9ab3ba851204394dd68f65cd1f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledObjects:
-  - {fileID: 0}
-  objectToPool: {fileID: 8703307819721642126, guid: c0282ef64a8b44f4faac825eb6ceffa4, type: 3}
-  amountToPool: 10
 --- !u!4 &1236994956
 Transform:
   m_ObjectHideFlags: 0
@@ -1070,8 +1066,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca9043a0d4d3bb54d8ab2898712fe1d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectToSpawn: {fileID: 8703307819721642126, guid: c0282ef64a8b44f4faac825eb6ceffa4, type: 3}
   spawnRadius: 11.5
-  spawnTimer: 0
   minSpawnTime: 0.5
   maxSpawnTime: 5
 --- !u!4 &1853162973
@@ -1107,11 +1103,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7266312940298577985, guid: cc6910a8863fd9c48b5d8d5ac2685f46, type: 3}
       propertyPath: engageDistance
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8746475329015690726, guid: cc6910a8863fd9c48b5d8d5ac2685f46, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.010714
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 8746475329015690726, guid: cc6910a8863fd9c48b5d8d5ac2685f46, type: 3}
       propertyPath: m_LocalPosition.y
