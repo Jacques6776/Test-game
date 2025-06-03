@@ -6,7 +6,8 @@ public class GoldPickup : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            gameObject.SetActive(false);
+            ObjectPool.ReturnObjectToPool(gameObject);
+            //gameObject.SetActive(false);
         }
     }
 }
