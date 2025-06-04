@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,8 +9,34 @@ public class ObjectPool : MonoBehaviour
     //It is static so we can use it in the static class at the bottom
     public static List<PooledObjectInfo> objectPools = new List<PooledObjectInfo>();
 
+    private GameObject objectPoolsEmptyHolder;
+
+    private static GameObject gameObjectsEmpty;
+
+    //Like a folder to keep all the objects in. Will make empty game objects
+    public enum PoolType
+    {
+        Gameobject,
+        None
+    }
+    public static PoolType PoolingType;
+
+    private void Awake()
+    {
+        //Will make the empty objects to house the pooled objects
+        SetupEmpties();
+    }
+
+    private void SetupEmpties()
+    {
+        objectPoolsEmptyHolder = new GameObject("Pooled Objects");
+
+        gameObjectsEmpty = new GameObject("GameObjects");
+        gameObjectsEmpty.transform.SetParent(objectPoolsEmptyHolder.transform);
+    }
+
     //Actual method to spawn objects
-    public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation)
+    public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation, PoolType poolType = PoolType.None)
     {
         //this is a lamda expression, need to go read up more on this
         PooledObjectInfo pool = objectPools.Find(p => p.LookUpString == objectToSpawn.name);
@@ -35,8 +62,16 @@ public class ObjectPool : MonoBehaviour
 
         if (spawnableObject == null)
         {
+            //Find parent of empty object
+            GameObject parentObject = SetParentObject(poolType);
+
             //If there are no inactive objects, this will create a new one for use
             spawnableObject = Instantiate(objectToSpawn, spawnPosition, spawnRotation);
+
+            if (parentObject != null)
+            {
+                spawnableObject.transform.SetParent(parentObject.transform);
+            }
         }
         else
         {
@@ -72,7 +107,7 @@ public class ObjectPool : MonoBehaviour
     }
 
     //public static ObjectPool sharedInstance;
-        
+
     //public GameObject objectToPool;
     //public List<GameObject> pooledObjects;
     //public int amountToPool;
@@ -105,6 +140,22 @@ public class ObjectPool : MonoBehaviour
     //    }
     //    return null;
     //}
+
+    //Actually sets the parent object
+    private static GameObject SetParentObject(PoolType poolType)
+    {
+        switch (poolType)
+        {
+            case PoolType.Gameobject:
+                return gameObjectsEmpty;
+
+            case PoolType.None:
+                return null;
+
+            default:
+                return null;
+        }
+    }
 }
 
 //Class for different object pools. Contains lookup string and a list for the pooled objects
