@@ -91,7 +91,7 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Wall"))
         {
-            Destroy(gameObject);
+            ObjectPool.ReturnObjectToPool(gameObject);
         }
 
         if(collision.gameObject.CompareTag("Player"))
@@ -104,7 +104,8 @@ public class EnemyController : MonoBehaviour
             }
             else if (enemyAttacks >= totalEnemyAttacks)
             {
-                Destroy(gameObject);
+                ObjectPool.ReturnObjectToPool(gameObject);
+                //Destroy(gameObject);
             }
         }
     }

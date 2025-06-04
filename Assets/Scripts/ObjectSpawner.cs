@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    public GameObject objectToSpawn;
+    public GameObject[] objectsToSpawn;
     [SerializeField]
     private float spawnRadius = 0.1f;
     
@@ -11,6 +11,11 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField]
     private float maxSpawnTime = 5f;
     private float spawnTimer;
+
+    private void Awake()
+    {
+        spawnTimer = Random.Range(minSpawnTime, maxSpawnTime);
+    }
 
     private void Update()
     {
@@ -26,10 +31,15 @@ public class ObjectSpawner : MonoBehaviour
 
     private void SpawnObject()
     {
-        Vector2 spawnPostition = Random.insideUnitSphere * spawnRadius;
-        objectToSpawn.transform.position = new Vector3(spawnPostition.x, 0f, spawnPostition.y);
+        Vector3 spawnPostition = Random.insideUnitSphere * spawnRadius + this.transform.position; // Need vector 2/3
+        Vector3 spawnCoordinates = new Vector3(spawnPostition.x, 1f, spawnPostition.z);
 
-        ObjectPool.SpawnObject(objectToSpawn, objectToSpawn.transform.position, objectToSpawn.transform.rotation);
+        int index = Random.Range(0, (objectsToSpawn.Length));
+        GameObject obj = objectsToSpawn[index];
+        
+        //obj.transform.position = new Vector3(spawnPostition.x, 1f, spawnPostition.y);
+
+        ObjectPool.SpawnObject(obj, spawnCoordinates, this.transform.rotation, ObjectPool.PoolType.Gameobject);
 
         //GameObject gold = ObjectPool.sharedInstance.GetPooledObject();
         //if(gold != null)
