@@ -29,6 +29,8 @@ public class EnemyController : MonoBehaviour
     private Rigidbody enemyRb;
     private PlayerController playerObject;
 
+    private Quaternion startRotation;
+
     private void Awake()
     {
         enemyRb = GetComponent<Rigidbody>();
@@ -38,6 +40,14 @@ public class EnemyController : MonoBehaviour
         currentMoveSpeed = startingSpeed;
 
         stunTimer = totalStunTime;
+
+        startRotation = transform.rotation;
+    }
+
+    private void OnEnable()
+    {
+        transform.rotation = startRotation;
+        PatrolState();
     }
 
     private void Update()
@@ -71,7 +81,7 @@ public class EnemyController : MonoBehaviour
         enemyRb.linearVelocity = transform.forward * currentMoveSpeed;
     }
 
-    private void ChaseState()
+    private void ChaseState()//check if chase state does not reset
     {
         if (isStunned)
         {
@@ -89,11 +99,6 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Wall"))
-        {
-            ObjectPool.ReturnObjectToPool(gameObject);
-        }
-
         if(collision.gameObject.CompareTag("Player"))
         {
             if (enemyAttacks < totalEnemyAttacks)
@@ -107,6 +112,14 @@ public class EnemyController : MonoBehaviour
                 ObjectPool.ReturnObjectToPool(gameObject);
                 //Destroy(gameObject);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            ObjectPool.ReturnObjectToPool(gameObject);
         }
     }
 

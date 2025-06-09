@@ -39,7 +39,7 @@ public class ObjectSpawner : MonoBehaviour
         
         //obj.transform.position = new Vector3(spawnPostition.x, 1f, spawnPostition.y);
 
-        ObjectPool.SpawnObject(obj, spawnCoordinates, this.transform.rotation, ObjectPool.PoolType.Gameobject);
+        ObjectPool.SpawnObject(obj, spawnCoordinates, this.transform.rotation.normalized, ObjectPool.PoolType.Gameobject);
 
         //GameObject gold = ObjectPool.sharedInstance.GetPooledObject();
         //if(gold != null)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GoldPickup : MonoBehaviour
+public class GoldPickup : MonoBehaviour    
 {
     private void OnTriggerEnter(Collider other)
     {

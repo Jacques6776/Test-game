@@ -103,6 +103,7 @@ public class ObjectPool : MonoBehaviour
         {
             obj.SetActive(false);
             pool.InactiveObjects.Add(obj);
+            //reset game states
         }
     }
 
