@@ -20,16 +20,18 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float totalStunTime = 1f;
     private float stunTimer;
-    private bool isStunned = false;
+    protected bool isStunned = false;
 
     [SerializeField]
-    private int totalEnemyAttacks = 3;
-    private int enemyAttacks;
+    protected int totalEnemyAttacks = 3;
+    protected int enemyAttacks;
+        
+    protected bool inRange = false;
 
     private Rigidbody enemyRb;
-    private PlayerController playerObject;
+    protected PlayerController playerObject;
 
-    private Quaternion startRotation;
+    protected Quaternion startRotation;
 
     private void Awake()
     {
@@ -47,11 +49,17 @@ public class EnemyController : MonoBehaviour
     private void OnEnable()
     {
         transform.rotation = startRotation;
+        enemyAttacks = 0;
         PatrolState();
     }
 
     private void Update()
     {
+        if (enemyAttacks >= totalEnemyAttacks)
+        {
+            ObjectPool.ReturnObjectToPool(gameObject);
+        }
+
         if ((playerObject.transform.position - transform.position).magnitude < engageDistance)
         {
             ChaseState();            
@@ -78,11 +86,13 @@ public class EnemyController : MonoBehaviour
 
     private void PatrolState()
     {
+        inRange = false;
         enemyRb.linearVelocity = transform.forward * currentMoveSpeed;
     }
 
-    private void ChaseState()//check if chase state does not reset
+    private void ChaseState()
     {
+        inRange = true;
         if (isStunned)
         {
             return;
@@ -97,23 +107,24 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Player"))
-        {
-            if (enemyAttacks < totalEnemyAttacks)
-            {
-                Debug.Log("Player attacked!");
-                isStunned = true;
-                enemyAttacks++;
-            }
-            else if (enemyAttacks >= totalEnemyAttacks)
-            {
-                ObjectPool.ReturnObjectToPool(gameObject);
-                //Destroy(gameObject);
-            }
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(collision.gameObject.CompareTag("Player"))
+    //    {
+    //        if (enemyAttacks < totalEnemyAttacks)
+    //        {
+    //            Debug.Log("Player attacked!");
+    //            isStunned = true;
+    //            enemyAttacks++;
+    //        }
+    //        else if (enemyAttacks >= totalEnemyAttacks)
+    //        {
+    //            transform.rotation = startRotation;
+    //            ObjectPool.ReturnObjectToPool(gameObject);
+    //            //Destroy(gameObject);
+    //        }
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
