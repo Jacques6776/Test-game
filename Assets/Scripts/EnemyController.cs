@@ -107,25 +107,6 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if(collision.gameObject.CompareTag("Player"))
-    //    {
-    //        if (enemyAttacks < totalEnemyAttacks)
-    //        {
-    //            Debug.Log("Player attacked!");
-    //            isStunned = true;
-    //            enemyAttacks++;
-    //        }
-    //        else if (enemyAttacks >= totalEnemyAttacks)
-    //        {
-    //            transform.rotation = startRotation;
-    //            ObjectPool.ReturnObjectToPool(gameObject);
-    //            //Destroy(gameObject);
-    //        }
-    //    }
-    //}
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Wall"))

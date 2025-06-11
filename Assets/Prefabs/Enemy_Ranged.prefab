@@ -188,9 +188,9 @@ MonoBehaviour:
   chaseSpeed: 4
   engageDistance: 5
   totalStunTime: 1
-  totalEnemyAttacks: 1
+  totalEnemyAttacks: 3
   enemyProjectile: {fileID: 9131285414851618389, guid: 692232077bbfb39478cc6d28393b2662, type: 3}
-  projectileSpawn: {fileID: 1008469910489918971}
+  projectileSpawn: {fileID: 4775695063238837252}
   shotCooldownTime: 1
 --- !u!1 &8804404979266629619
 GameObject:

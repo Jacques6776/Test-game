@@ -5,16 +5,15 @@ using UnityEngine.Windows;
 public class PlayerController : MonoBehaviour
 {
     //Player movement controlls
-
     [SerializeField]
-    private float baseMovemetSpeed = 5f;    
+    private float baseMovemetSpeed = 5f;
     private float currentMovementSpeed;
     private Rigidbody playerRB;
     private Vector2 moveVector;
 
     //Boost Controlls
     [SerializeField]
-    private float boostedMovementSpeed = 10f;    
+    private float boostedMovementSpeed = 10f;
     private bool inBoostState = false;
     private bool boostInCooldown = true;
     [SerializeField]
@@ -24,9 +23,23 @@ public class PlayerController : MonoBehaviour
     private float maxBoostTime = 5f;
     private float boostTimer;
 
+    //Player health controlls
+    [SerializeField]
+    private int totalPlayerHealth = 5;
+    [SerializeField]
+    private int currentPlayerHealth;
+
+    //Gold pickup points and health controlls
+    [SerializeField]
+    private int goldPointValue = 1;
+    [SerializeField]
+    private int goldHealAmount = 1;
+    private int playerScore = 0;
+
     private void Awake()
     {
         playerRB = GetComponent<Rigidbody>();
+        currentPlayerHealth = totalPlayerHealth;
     }
 
     private void Update()
@@ -98,6 +111,33 @@ public class PlayerController : MonoBehaviour
         {
             boostAvailable = true;
             boostInCooldown = false;
+        }
+    }
+
+    public void DamagePlayer(int damage)
+    {
+        if (currentPlayerHealth <= 0)
+        {
+            Debug.Log("Player is Dead");
+        }
+        else
+        {
+            currentPlayerHealth -= damage;
+        }
+    }
+
+    public void GoldPickupCounter()
+    {
+        playerScore += goldPointValue;
+        Debug.Log(playerScore);
+
+        if (currentPlayerHealth == totalPlayerHealth)
+        {
+            return;
+        }
+        else
+        {
+            currentPlayerHealth += goldHealAmount;
         }
     }
 }

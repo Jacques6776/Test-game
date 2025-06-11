@@ -7,9 +7,14 @@ public class EnemyProjectile : MonoBehaviour
 
     private Rigidbody projectileRB;
 
+    [SerializeField]
+    private int damageAmount = 1;
+    private PlayerController playerObject;
+
     private void Awake()
     {
         projectileRB = GetComponent<Rigidbody>();
+        playerObject = FindFirstObjectByType<PlayerController>();
     }
 
     private void Update()
@@ -21,9 +26,10 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player is hit");            
+            Debug.Log("Player is hit");
+            playerObject.DamagePlayer(damageAmount);
         }
 
-        Destroy(gameObject);
+        ObjectPool.ReturnObjectToPool(gameObject);
     }
 }

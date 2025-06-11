@@ -29,8 +29,7 @@ public class EnemyRanged : EnemyController
     private void FireAtPlayer()
     {
         transform.LookAt(playerObject.transform.position);
-        Debug.Log("Pew pew");
-        Instantiate(enemyProjectile, projectileSpawn.position, projectileSpawn.rotation);
+        ObjectPool.SpawnObject(enemyProjectile, projectileSpawn.position, projectileSpawn.rotation, ObjectPool.PoolType.Gameobject);
         isStunned = true;
         shotTimer = 0f;
         enemyAttacks++;
